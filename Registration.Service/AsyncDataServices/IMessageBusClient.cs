@@ -8,6 +8,7 @@ namespace Registration.Service.AsyncDataServices
         void PublishRestaurantAddress(PublishRestaurantAddress publishRestaurantAddress);
         void PublishFoodCategory(PublishFoodCategory publishFoodCategory);
         void PublishFood(PublishFood publishFood);
+        void PublishOrderStreamingConnection(PublishOrderStreamingConnection publishOrderStreamingConnection);
 
     }
 }

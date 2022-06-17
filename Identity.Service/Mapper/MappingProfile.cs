@@ -9,6 +9,7 @@ namespace Identity.Service.Mapper
         public MappingProfile()
         {
             CreateMap<UserRegisterDto, User>();
+            CreateMap<CompanyRegisterDto, Company>();
         }
     }
 }

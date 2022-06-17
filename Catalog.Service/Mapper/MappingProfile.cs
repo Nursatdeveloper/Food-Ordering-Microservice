@@ -1,5 +1,6 @@
 using AutoMapper;
 using Catalog.Service.Models;
+using Catalog.Service.PublishItems;
 
 namespace Catalog.Service.Mapper
 {
@@ -11,6 +12,8 @@ namespace Catalog.Service.Mapper
             CreateMap<PublishRestaurantAddressDto, Address>();
             CreateMap<PublishFoodCategoryDto, FoodCategory>();
             CreateMap<PublishFoodDto, Food>();
+            CreateMap<CreateOrderDto, PublishOrder>();
+
         }
     }
 }

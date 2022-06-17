@@ -25,6 +25,8 @@ builder.Services.AddScoped<IRepository<Restaurant>, Repository<Restaurant>>();
 builder.Services.AddScoped<IRepository<Address>, Repository<Address>>();
 builder.Services.AddScoped<IRepository<FoodCategory>, Repository<FoodCategory>>();
 builder.Services.AddScoped<IRepository<Food>, Repository<Food>>();
+builder.Services.AddScoped<IRepository<OrderStreamingConnection>, Repository<OrderStreamingConnection>>();
+
 
 var app = builder.Build();
 

@@ -94,5 +94,11 @@ namespace Registration.Service.AsyncDataServices
             var message = JsonSerializer.Serialize(publishRestaurantAddress);
             SendMessage(message);
         }
+
+        public void PublishOrderStreamingConnection(PublishOrderStreamingConnection publishOrderStreamingConnection)
+        {
+            var message = JsonSerializer.Serialize(publishOrderStreamingConnection);
+            SendMessage(message);
+        }
     }
 }

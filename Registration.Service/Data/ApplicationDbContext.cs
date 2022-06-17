@@ -12,5 +12,6 @@ namespace Registration.Service.Data
         public DbSet<Address>? Addresses { get; set; }
         public DbSet<FoodCategory>? FoodCategories { get; set; } 
         public DbSet<Food>? Foods { get; set; }
+        public DbSet<OrderStreamingConnection> OrderStreamingConnections { get; set; }
     }
 }

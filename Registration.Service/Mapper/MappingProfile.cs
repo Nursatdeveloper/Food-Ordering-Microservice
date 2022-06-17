@@ -17,6 +17,8 @@ namespace Registration.Service.Mapper
             CreateMap<Address, PublishRestaurantAddress>();
             CreateMap<Food, PublishFood>();
             CreateMap<FoodCategory, PublishFoodCategory>();
+            CreateMap<CreateOrderStreamingConnection, OrderStreamingConnection>();
+            CreateMap<OrderStreamingConnection, PublishOrderStreamingConnection>();
         }
     }
 }

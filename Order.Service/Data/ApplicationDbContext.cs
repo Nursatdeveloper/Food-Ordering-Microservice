@@ -9,6 +9,7 @@ namespace Order.Service.Data
         {}
 
         public DbSet<FoodOrder> FoodOrders { get; set; }
+        public DbSet<OrderStreamingConnection> OrderStreamingConnections { get; set; }
 
     }
 }

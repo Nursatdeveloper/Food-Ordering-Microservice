@@ -48,7 +48,7 @@ namespace Order.Service.Repository
 
         public async Task<T> GetAsync(Expression<Func<T, bool>> condition)
         {
-            return await _context.Set<T>().Where(condition).FirstAsync();
+            return await _context.Set<T>().Where(condition).FirstOrDefaultAsync();
         }
 
         public async Task<T> GetByIdAsync(int id)

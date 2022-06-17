@@ -2,8 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using Order.Service.AsyncDataServices;
 using Order.Service.Data;
 using Order.Service.EventProcessing;
+using Order.Service.Hubs;
 using Order.Service.Models;
 using Order.Service.Repository;
+using Order.Service.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,11 @@ builder.Services.AddHostedService<MessageBusSubscriber>();
 builder.Services.AddSingleton<IEventProcessor, EventProcessor>();
 
 builder.Services.AddScoped<IRepository<FoodOrder>, Repository<FoodOrder>>();
+builder.Services.AddScoped<IRepository<OrderStreamingConnection>, Repository<OrderStreamingConnection>>();
+
+
+builder.Services.AddSignalR();
+builder.Services.AddSingleton<IDictionary<string, ConnectionParameters>>(options => new Dictionary<string, ConnectionParameters>());
 
 var app = builder.Build();
 
@@ -38,5 +45,11 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<OrderHub>("/ws/orders");
+});
 
 app.Run();

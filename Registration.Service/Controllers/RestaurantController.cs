@@ -1,9 +1,12 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Registration.Service.AsyncDataServices;
 using Registration.Service.Models;
 using Registration.Service.PublishItems;
 using Registration.Service.Repository;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace Registration.Service.Controllers
 {
@@ -53,6 +56,13 @@ namespace Registration.Service.Controllers
         [HttpPost]
         public async Task<ActionResult> Post(CreateRestaurantDto createRestaurantDto)
         {
+            var jwt = GetToken();
+            var company = jwt.Claims.Where(c => c.Type == "Company").FirstOrDefault()?.Value;
+            if(company is null || company != createRestaurantDto.Company)
+            {
+                return Unauthorized();
+            }
+
             var restaurantExists = await _restaurantRepository.Contains(r => r.Name == createRestaurantDto.Name);
             if(restaurantExists)
             {
@@ -145,6 +155,15 @@ namespace Registration.Service.Controllers
 
             await _restaurantRepository.DeleteAsync(restaurant);
             return Ok();
+        }
+
+        private JwtSecurityToken GetToken()
+        {
+            string authHeader = HttpContext.Request.Headers["Authorization"];
+            string token = authHeader.Substring("Bearer ".Length).Trim();
+            var handler = new JwtSecurityTokenHandler();
+            var jwt = handler.ReadJwtToken(token);
+            return jwt;
         }
 
     }

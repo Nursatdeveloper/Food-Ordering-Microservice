@@ -14,7 +14,28 @@ namespace Identity.Service.JwtService
             _key = key;
         }
 
-        public string GenerateToken(User user)
+        public string GenerateTokenForCompany(Company company)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenKey = Encoding.ASCII.GetBytes(_key);
+            var symmetricSecurityKey = new SymmetricSecurityKey(tokenKey);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim("Company", company.CompanyName),
+                    new Claim("CompanyLogin", company.CompanyLogin),
+                    new Claim("Role", "Company")
+                }),
+                Expires = DateTime.UtcNow.AddHours(1),
+                SigningCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
+
+        public string GenerateTokenForUser(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.ASCII.GetBytes(_key);

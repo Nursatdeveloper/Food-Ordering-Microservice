@@ -34,14 +34,14 @@ namespace Identity.Service.Controllers
         }
 
         [HttpPost]
-        [Route("login")]
+        [Route("user/login")]
         public async Task<ActionResult> Login(UserLoginDto userLoginDto)
         {
-            bool isSuccess = await Authenticate(userLoginDto.Telephone, userLoginDto.Password);
+            bool isSuccess = await AuthenticateUser(userLoginDto.Telephone, userLoginDto.Password);
             if (isSuccess)
             {
                 var user = await _context.Users.FirstOrDefaultAsync(u => u.Telephone == userLoginDto.Telephone);
-                var token = _jwtService.GenerateToken(user);
+                var token = _jwtService.GenerateTokenForUser(user);
                 if(token is null)
                 {
                     return Unauthorized();
@@ -52,7 +52,7 @@ namespace Identity.Service.Controllers
         }
 
         [HttpPost]
-        [Route("register")]
+        [Route("user/register")]
         public async Task<ActionResult> Register(UserRegisterDto userRegisterDto)
         {
             var user = _mapper.Map<User>(userRegisterDto);
@@ -68,7 +68,42 @@ namespace Identity.Service.Controllers
 
         }
 
-        private async Task<bool> Authenticate(string telephone, string password)
+        [HttpPost]
+        [Route("company/login")]
+        public async Task<ActionResult> LoginCompany(CompanyLoginDto companyLoginDto)
+        {
+            bool isSuccess = await AuthenticateCompany(companyLoginDto.companyLogin, companyLoginDto.companyPassword);
+            if (isSuccess)
+            {
+                var company = await _context.Companies.FirstOrDefaultAsync(c => c.CompanyLogin == companyLoginDto.companyLogin);
+                var token = _jwtService.GenerateTokenForCompany(company);
+                if (token is null)
+                {
+                    return Unauthorized();
+                }
+                return Ok(token);
+            }
+            return StatusCode(StatusCodes.Status401Unauthorized, "Credentials are incorrect or Company does not exists");
+        }
+
+        [HttpPost]
+        [Route("company/register")]
+        public async Task<ActionResult> RegisterCompany(CompanyRegisterDto companyRegisterDto)
+        {
+            var company = _mapper.Map<Company>(companyRegisterDto);
+            company.CompanyPassword = BCrypt.Net.BCrypt.HashPassword(companyRegisterDto.CompanyPassword);
+            var registeredCompany = await _context.Set<Company>().AddAsync(company);
+            await _context.SaveChangesAsync();
+            if (registeredCompany.Entity is null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Could not handle registration!");
+            }
+
+            return Ok(registeredCompany.Entity);
+
+        }
+
+        private async Task<bool> AuthenticateUser(string telephone, string password)
         {
             var user = await _context.Users.Where(u => u.Telephone == telephone).FirstOrDefaultAsync();
             if(user is null)
@@ -77,6 +112,21 @@ namespace Identity.Service.Controllers
             }
 
             if(BCrypt.Net.BCrypt.Verify(password, user.Password))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private async Task<bool> AuthenticateCompany(string companyLogin, string companyPassword)
+        {
+            var company = await _context.Companies.Where(c => c.CompanyLogin == companyLogin).FirstOrDefaultAsync();
+            if(company is null)
+            {
+                return false;
+            }
+
+            if(BCrypt.Net.BCrypt.Verify(companyPassword, company.CompanyPassword))
             {
                 return true;
             }
