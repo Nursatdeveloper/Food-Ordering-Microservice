@@ -28,6 +28,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Configuration.AddJsonFile(Path.Combine("Configuration", "configuration.Development.json"));
 builder.Configuration.AddJsonFile(Path.Combine("Registration.Service.Config", "config.Development.json"));
+builder.Configuration.AddJsonFile(Path.Combine("Catalog.Service.Config", "config.Development.json"));
 
 builder.Services.AddOcelot();
 

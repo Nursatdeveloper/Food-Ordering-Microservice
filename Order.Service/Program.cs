@@ -30,6 +30,8 @@ builder.Services.AddScoped<IRepository<OrderStreamingConnection>, Repository<Ord
 
 builder.Services.AddSignalR();
 builder.Services.AddSingleton<IDictionary<string, ConnectionParameters>>(options => new Dictionary<string, ConnectionParameters>());
+builder.Services.AddSingleton<IDictionary<string, DeliveryConnection>>(options => new Dictionary<string, DeliveryConnection>());
+
 
 var app = builder.Build();
 
@@ -50,6 +52,7 @@ app.UseRouting();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapHub<OrderHub>("/ws/orders");
+    endpoints.MapHub<DeliveryHub>("/ws/deliveries");
 });
 
 app.Run();

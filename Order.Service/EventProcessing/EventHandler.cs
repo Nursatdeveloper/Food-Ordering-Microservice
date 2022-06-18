@@ -41,7 +41,7 @@ namespace Order.Service.EventProcessing
             {
                 string room = $"{createdOrder.RestaurantName} {createdOrder.RestaurantAddress}";
                 await _hubContext.Clients.Group(room).SendAsync("NewOrder", createdOrder);  
-                Console.WriteLine("Send new order to WPF"); 
+                Console.WriteLine("Send new order to Restaurants"); 
             }
         }
 
