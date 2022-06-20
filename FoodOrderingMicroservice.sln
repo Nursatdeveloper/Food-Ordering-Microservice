@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Registration.Service", "Registration.Service\Registration.Service.csproj", "{F093F80E-04FE-4CBA-9965-CB4E79C934DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Registration.Service", "Registration.Service\Registration.Service.csproj", "{F093F80E-04FE-4CBA-9965-CB4E79C934DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog.Service", "Catalog.Service\Catalog.Service.csproj", "{D26A4813-FAD9-43AD-9430-434D9B6563E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog.Service", "Catalog.Service\Catalog.Service.csproj", "{D26A4813-FAD9-43AD-9430-434D9B6563E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order.Service", "Order.Service\Order.Service.csproj", "{CCEC0F2B-1B1F-449B-9CD5-B139809B4E7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Order.Service", "Order.Service\Order.Service.csproj", "{CCEC0F2B-1B1F-449B-9CD5-B139809B4E7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Service", "Identity.Service\Identity.Service.csproj", "{219B8B34-3456-4B35-AD40-F96F780F56F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Service", "Identity.Service\Identity.Service.csproj", "{219B8B34-3456-4B35-AD40-F96F780F56F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api_Gateway", "Api_Gateway\Api_Gateway.csproj", "{DAA912F0-46D7-4E13-8267-84703A9F4899}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api_Gateway", "Api_Gateway\Api_Gateway.csproj", "{DAA912F0-46D7-4E13-8267-84703A9F4899}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Libraries", "Common.Libraries\Common.Libraries.csproj", "{43CB5D2E-56A2-43C0-B1E7-3CA6273949A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{DAA912F0-46D7-4E13-8267-84703A9F4899}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAA912F0-46D7-4E13-8267-84703A9F4899}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAA912F0-46D7-4E13-8267-84703A9F4899}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43CB5D2E-56A2-43C0-B1E7-3CA6273949A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43CB5D2E-56A2-43C0-B1E7-3CA6273949A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43CB5D2E-56A2-43C0-B1E7-3CA6273949A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43CB5D2E-56A2-43C0-B1E7-3CA6273949A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

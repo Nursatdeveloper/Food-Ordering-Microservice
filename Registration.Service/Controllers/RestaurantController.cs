@@ -43,22 +43,25 @@ namespace Registration.Service.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Restaurant>>> Get()
+        public async Task<ActionResult<IEnumerable<Restaurant>>> Get(string company)
         {
-            var restaurants = await _restaurantRepository.GetAllAsync();
-            if(restaurants.Count() == 0)
+            if(GetJwtClaimValue("Company") == company)
             {
-                return BadRequest("List of Restaurants is empty!");
+                var restaurants = await _restaurantRepository.GetAllAsync(r => r.Company == company);
+                if (restaurants.Count() == 0)
+                {
+                    return BadRequest($"{company} List of Restaurants is empty!");
+                }
+                return Ok(restaurants);
             }
-            return Ok(restaurants);
+            return Unauthorized();
+
         }
 
         [HttpPost]
         public async Task<ActionResult> Post(CreateRestaurantDto createRestaurantDto)
         {
-            var jwt = GetToken();
-            var company = jwt.Claims.Where(c => c.Type == "Company").FirstOrDefault()?.Value;
-            if(company is null || company != createRestaurantDto.Company)
+            if(GetJwtClaimValue("Company") != createRestaurantDto.Company)
             {
                 return Unauthorized();
             }
@@ -164,6 +167,20 @@ namespace Registration.Service.Controllers
             var handler = new JwtSecurityTokenHandler();
             var jwt = handler.ReadJwtToken(token);
             return jwt;
+        }
+
+        private string GetJwtClaimValue(string claimType)
+        {
+            string authHeader = HttpContext.Request.Headers["Authorization"];
+            string token = authHeader.Substring("Bearer ".Length).Trim();
+            var handler = new JwtSecurityTokenHandler();
+            var jwt = handler.ReadJwtToken(token);
+            var claimValue = jwt.Claims.Where(c => c.Type == claimType).FirstOrDefault()?.Value;
+            if(claimValue is null)
+            {
+                return "";
+            }
+            return claimValue;
         }
 
     }

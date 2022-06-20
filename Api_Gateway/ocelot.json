@@ -1,0 +1,704 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/v1/catalog/restaurants",
+      "UpstreamPathTemplate": "/gw/c/restaurants",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamHttpMethod": null,
+      "AddHeadersToRequest": {
+      },
+      "UpstreamHeaderTransform": {
+      },
+      "DownstreamHeaderTransform": {
+      },
+      "AddClaimsToRequest": {
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Customer"
+      },
+      "AddQueriesToRequest": {
+      },
+      "ChangeDownstreamPathTemplate": {
+      },
+      "RequestIdKey": null,
+      "FileCacheOptions": {
+        "TtlSeconds": 0,
+        "Region": null
+      },
+      "RouteIsCaseSensitive": false,
+      "ServiceName": null,
+      "ServiceNamespace": null,
+      "DownstreamScheme": "https",
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 0,
+        "DurationOfBreak": 0,
+        "TimeoutValue": 0
+      },
+      "LoadBalancerOptions": {
+        "Type": null,
+        "Key": null,
+        "Expiry": 0
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [
+        ],
+        "EnableRateLimiting": false,
+        "Period": null,
+        "PeriodTimespan": 0.0,
+        "Limit": 0
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [
+        ]
+      },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false,
+        "UseTracing": false,
+        "UseProxy": true,
+        "MaxConnectionsPerServer": 2147483647
+      },
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5051
+        }
+      ],
+      "UpstreamHost": null,
+      "Key": null,
+      "DelegatingHandlers": [
+      ],
+      "Priority": 1,
+      "Timeout": 0,
+      "DangerousAcceptAnyServerCertificateValidator": false,
+      "SecurityOptions": {
+        "IPAllowedList": [
+        ],
+        "IPBlockedList": [
+        ]
+      },
+      "DownstreamHttpVersion": null
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/catalog/restaurants/{rId}/addresses?city={city}",
+      "UpstreamPathTemplate": "/gw/c/restaurants/{rId}/addresses?city={city}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamHttpMethod": null,
+      "AddHeadersToRequest": {
+      },
+      "UpstreamHeaderTransform": {
+      },
+      "DownstreamHeaderTransform": {
+      },
+      "AddClaimsToRequest": {
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Customer"
+      },
+      "AddQueriesToRequest": {
+      },
+      "ChangeDownstreamPathTemplate": {
+      },
+      "RequestIdKey": null,
+      "FileCacheOptions": {
+        "TtlSeconds": 0,
+        "Region": null
+      },
+      "RouteIsCaseSensitive": false,
+      "ServiceName": null,
+      "ServiceNamespace": null,
+      "DownstreamScheme": "https",
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 0,
+        "DurationOfBreak": 0,
+        "TimeoutValue": 0
+      },
+      "LoadBalancerOptions": {
+        "Type": null,
+        "Key": null,
+        "Expiry": 0
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [
+        ],
+        "EnableRateLimiting": false,
+        "Period": null,
+        "PeriodTimespan": 0.0,
+        "Limit": 0
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [
+        ]
+      },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false,
+        "UseTracing": false,
+        "UseProxy": true,
+        "MaxConnectionsPerServer": 2147483647
+      },
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5051
+        }
+      ],
+      "UpstreamHost": null,
+      "Key": null,
+      "DelegatingHandlers": [
+      ],
+      "Priority": 1,
+      "Timeout": 0,
+      "DangerousAcceptAnyServerCertificateValidator": false,
+      "SecurityOptions": {
+        "IPAllowedList": [
+        ],
+        "IPBlockedList": [
+        ]
+      },
+      "DownstreamHttpVersion": null
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/catalog/restaurants/{rId}/food-categories",
+      "UpstreamPathTemplate": "/gw/c/restaurant/{rId}/food-categories",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamHttpMethod": null,
+      "AddHeadersToRequest": {
+      },
+      "UpstreamHeaderTransform": {
+      },
+      "DownstreamHeaderTransform": {
+      },
+      "AddClaimsToRequest": {
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Customer"
+      },
+      "AddQueriesToRequest": {
+      },
+      "ChangeDownstreamPathTemplate": {
+      },
+      "RequestIdKey": null,
+      "FileCacheOptions": {
+        "TtlSeconds": 0,
+        "Region": null
+      },
+      "RouteIsCaseSensitive": false,
+      "ServiceName": null,
+      "ServiceNamespace": null,
+      "DownstreamScheme": "https",
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 0,
+        "DurationOfBreak": 0,
+        "TimeoutValue": 0
+      },
+      "LoadBalancerOptions": {
+        "Type": null,
+        "Key": null,
+        "Expiry": 0
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [
+        ],
+        "EnableRateLimiting": false,
+        "Period": null,
+        "PeriodTimespan": 0.0,
+        "Limit": 0
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [
+        ]
+      },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false,
+        "UseTracing": false,
+        "UseProxy": true,
+        "MaxConnectionsPerServer": 2147483647
+      },
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5051
+        }
+      ],
+      "UpstreamHost": null,
+      "Key": null,
+      "DelegatingHandlers": [
+      ],
+      "Priority": 1,
+      "Timeout": 0,
+      "DangerousAcceptAnyServerCertificateValidator": false,
+      "SecurityOptions": {
+        "IPAllowedList": [
+        ],
+        "IPBlockedList": [
+        ]
+      },
+      "DownstreamHttpVersion": null
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/catalog/restaurants/{rId}/food-categories/{cId}/foods",
+      "UpstreamPathTemplate": "/gw/c/restaurant/{rId}/category/{cId}/foods",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamHttpMethod": null,
+      "AddHeadersToRequest": {
+      },
+      "UpstreamHeaderTransform": {
+      },
+      "DownstreamHeaderTransform": {
+      },
+      "AddClaimsToRequest": {
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Customer"
+      },
+      "AddQueriesToRequest": {
+      },
+      "ChangeDownstreamPathTemplate": {
+      },
+      "RequestIdKey": null,
+      "FileCacheOptions": {
+        "TtlSeconds": 0,
+        "Region": null
+      },
+      "RouteIsCaseSensitive": false,
+      "ServiceName": null,
+      "ServiceNamespace": null,
+      "DownstreamScheme": "https",
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 0,
+        "DurationOfBreak": 0,
+        "TimeoutValue": 0
+      },
+      "LoadBalancerOptions": {
+        "Type": null,
+        "Key": null,
+        "Expiry": 0
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [
+        ],
+        "EnableRateLimiting": false,
+        "Period": null,
+        "PeriodTimespan": 0.0,
+        "Limit": 0
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [
+        ]
+      },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false,
+        "UseTracing": false,
+        "UseProxy": true,
+        "MaxConnectionsPerServer": 2147483647
+      },
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5051
+        }
+      ],
+      "UpstreamHost": null,
+      "Key": null,
+      "DelegatingHandlers": [
+      ],
+      "Priority": 1,
+      "Timeout": 0,
+      "DangerousAcceptAnyServerCertificateValidator": false,
+      "SecurityOptions": {
+        "IPAllowedList": [
+        ],
+        "IPBlockedList": [
+        ]
+      },
+      "DownstreamHttpVersion": null
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/order",
+      "UpstreamPathTemplate": "/gw/c/order",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamHttpMethod": null,
+      "AddHeadersToRequest": {
+      },
+      "UpstreamHeaderTransform": {
+      },
+      "DownstreamHeaderTransform": {
+      },
+      "AddClaimsToRequest": {
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Customer"
+      },
+      "AddQueriesToRequest": {
+      },
+      "ChangeDownstreamPathTemplate": {
+      },
+      "RequestIdKey": null,
+      "FileCacheOptions": {
+        "TtlSeconds": 0,
+        "Region": null
+      },
+      "RouteIsCaseSensitive": false,
+      "ServiceName": null,
+      "ServiceNamespace": null,
+      "DownstreamScheme": "https",
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 0,
+        "DurationOfBreak": 0,
+        "TimeoutValue": 0
+      },
+      "LoadBalancerOptions": {
+        "Type": null,
+        "Key": null,
+        "Expiry": 0
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [
+        ],
+        "EnableRateLimiting": false,
+        "Period": null,
+        "PeriodTimespan": 0.0,
+        "Limit": 0
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [
+        ]
+      },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false,
+        "UseTracing": false,
+        "UseProxy": true,
+        "MaxConnectionsPerServer": 2147483647
+      },
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5051
+        }
+      ],
+      "UpstreamHost": null,
+      "Key": null,
+      "DelegatingHandlers": [
+      ],
+      "Priority": 1,
+      "Timeout": 0,
+      "DangerousAcceptAnyServerCertificateValidator": false,
+      "SecurityOptions": {
+        "IPAllowedList": [
+        ],
+        "IPBlockedList": [
+        ]
+      },
+      "DownstreamHttpVersion": null
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/restaurants?company={company}",
+      "UpstreamPathTemplate": "/gw/r/restaurants?company={company}",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamHttpMethod": null,
+      "AddHeadersToRequest": {
+      },
+      "UpstreamHeaderTransform": {
+      },
+      "DownstreamHeaderTransform": {
+      },
+      "AddClaimsToRequest": {
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Company"
+      },
+      "AddQueriesToRequest": {
+      },
+      "ChangeDownstreamPathTemplate": {
+      },
+      "RequestIdKey": null,
+      "FileCacheOptions": {
+        "TtlSeconds": 0,
+        "Region": null
+      },
+      "RouteIsCaseSensitive": false,
+      "ServiceName": null,
+      "ServiceNamespace": null,
+      "DownstreamScheme": "https",
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 0,
+        "DurationOfBreak": 0,
+        "TimeoutValue": 0
+      },
+      "LoadBalancerOptions": {
+        "Type": null,
+        "Key": null,
+        "Expiry": 0
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [
+        ],
+        "EnableRateLimiting": false,
+        "Period": null,
+        "PeriodTimespan": 0.0,
+        "Limit": 0
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [
+        ]
+      },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false,
+        "UseTracing": false,
+        "UseProxy": true,
+        "MaxConnectionsPerServer": 2147483647
+      },
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamHost": null,
+      "Key": null,
+      "DelegatingHandlers": [
+      ],
+      "Priority": 1,
+      "Timeout": 0,
+      "DangerousAcceptAnyServerCertificateValidator": false,
+      "SecurityOptions": {
+        "IPAllowedList": [
+        ],
+        "IPBlockedList": [
+        ]
+      },
+      "DownstreamHttpVersion": null
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/restaurants",
+      "UpstreamPathTemplate": "/gw/r/restaurants",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamHttpMethod": null,
+      "AddHeadersToRequest": {
+      },
+      "UpstreamHeaderTransform": {
+      },
+      "DownstreamHeaderTransform": {
+      },
+      "AddClaimsToRequest": {
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Company"
+      },
+      "AddQueriesToRequest": {
+      },
+      "ChangeDownstreamPathTemplate": {
+      },
+      "RequestIdKey": null,
+      "FileCacheOptions": {
+        "TtlSeconds": 0,
+        "Region": null
+      },
+      "RouteIsCaseSensitive": false,
+      "ServiceName": null,
+      "ServiceNamespace": null,
+      "DownstreamScheme": "https",
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 0,
+        "DurationOfBreak": 0,
+        "TimeoutValue": 0
+      },
+      "LoadBalancerOptions": {
+        "Type": null,
+        "Key": null,
+        "Expiry": 0
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [
+        ],
+        "EnableRateLimiting": false,
+        "Period": null,
+        "PeriodTimespan": 0.0,
+        "Limit": 0
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [
+        ]
+      },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false,
+        "UseTracing": false,
+        "UseProxy": true,
+        "MaxConnectionsPerServer": 2147483647
+      },
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamHost": null,
+      "Key": null,
+      "DelegatingHandlers": [
+      ],
+      "Priority": 1,
+      "Timeout": 0,
+      "DangerousAcceptAnyServerCertificateValidator": false,
+      "SecurityOptions": {
+        "IPAllowedList": [
+        ],
+        "IPBlockedList": [
+        ]
+      },
+      "DownstreamHttpVersion": null
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/restaurants/address",
+      "UpstreamPathTemplate": "/r/restaurants/address",
+      "UpstreamHttpMethod": [
+        "Post"
+      ],
+      "DownstreamHttpMethod": null,
+      "AddHeadersToRequest": {
+      },
+      "UpstreamHeaderTransform": {
+      },
+      "DownstreamHeaderTransform": {
+      },
+      "AddClaimsToRequest": {
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Company"
+      },
+      "AddQueriesToRequest": {
+      },
+      "ChangeDownstreamPathTemplate": {
+      },
+      "RequestIdKey": null,
+      "FileCacheOptions": {
+        "TtlSeconds": 0,
+        "Region": null
+      },
+      "RouteIsCaseSensitive": false,
+      "ServiceName": null,
+      "ServiceNamespace": null,
+      "DownstreamScheme": "https",
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 0,
+        "DurationOfBreak": 0,
+        "TimeoutValue": 0
+      },
+      "LoadBalancerOptions": {
+        "Type": null,
+        "Key": null,
+        "Expiry": 0
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [
+        ],
+        "EnableRateLimiting": false,
+        "Period": null,
+        "PeriodTimespan": 0.0,
+        "Limit": 0
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": [
+        ]
+      },
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": false,
+        "UseCookieContainer": false,
+        "UseTracing": false,
+        "UseProxy": true,
+        "MaxConnectionsPerServer": 2147483647
+      },
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamHost": null,
+      "Key": null,
+      "DelegatingHandlers": [
+      ],
+      "Priority": 1,
+      "Timeout": 0,
+      "DangerousAcceptAnyServerCertificateValidator": false,
+      "SecurityOptions": {
+        "IPAllowedList": [
+        ],
+        "IPBlockedList": [
+        ]
+      },
+      "DownstreamHttpVersion": null
+    }
+  ],
+  "DynamicRoutes": [
+  ],
+  "Aggregates": [
+  ],
+  "GlobalConfiguration": {
+    "RequestIdKey": null,
+    "ServiceDiscoveryProvider": {
+      "Scheme": null,
+      "Host": null,
+      "Port": 0,
+      "Type": null,
+      "Token": null,
+      "ConfigurationKey": null,
+      "PollingInterval": 0,
+      "Namespace": null
+    },
+    "RateLimitOptions": {
+      "ClientIdHeader": "ClientId",
+      "QuotaExceededMessage": null,
+      "RateLimitCounterPrefix": "ocelot",
+      "DisableRateLimitHeaders": false,
+      "HttpStatusCode": 429
+    },
+    "QoSOptions": {
+      "ExceptionsAllowedBeforeBreaking": 0,
+      "DurationOfBreak": 0,
+      "TimeoutValue": 0
+    },
+    "BaseUrl": null,
+    "LoadBalancerOptions": {
+      "Type": null,
+      "Key": null,
+      "Expiry": 0
+    },
+    "DownstreamScheme": null,
+    "HttpHandlerOptions": {
+      "AllowAutoRedirect": false,
+      "UseCookieContainer": false,
+      "UseTracing": false,
+      "UseProxy": true,
+      "MaxConnectionsPerServer": 2147483647
+    },
+    "DownstreamHttpVersion": null
+  }
+}

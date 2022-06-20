@@ -26,9 +26,12 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Configuration.AddJsonFile(Path.Combine("Configuration", "configuration.Development.json"));
-builder.Configuration.AddJsonFile(Path.Combine("Registration.Service.Config", "config.Development.json"));
-builder.Configuration.AddJsonFile(Path.Combine("Catalog.Service.Config", "config.Development.json"));
+builder.WebHost.ConfigureAppConfiguration((hostingContext, config) =>
+{
+    config.SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
+        .AddOcelot($"{hostingContext.HostingEnvironment.ContentRootPath}/DevelopmentConfigurations", hostingContext.HostingEnvironment)
+        .AddEnvironmentVariables();
+});
 
 builder.Services.AddOcelot();
 

@@ -1,6 +1,25 @@
 {
   "Routes": [
     {
+      "DownstreamPathTemplate": "/api/v1/restaurants?company={company}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/gw/r/restaurants?company={company}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Company"
+      }
+    },
+    {
       "DownstreamPathTemplate": "/api/v1/restaurants",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -9,8 +28,8 @@
           "Port": 5001
         }
       ],
-      "UpstreamPathTemplate": "/r/restaurants",
-      "UpstreamHttpMethod": [ "Post", "Get" ],
+      "UpstreamPathTemplate": "/gw/r/restaurants",
+      "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
@@ -29,7 +48,7 @@
         }
       ],
       "UpstreamPathTemplate": "/r/restaurants/address",
-      "UpstreamHttpMethod": [ "Post"],
+      "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
