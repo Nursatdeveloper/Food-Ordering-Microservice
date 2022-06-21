@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option csharp_namespace = "Image.Grpc.Service";
+
+package images;
+
+service Images {
+	rpc PostFoodImage (PostFoodImageRequest) returns (PostFoodImageReply);
+}
+
+message PostFoodImageRequest {
+	string restaurant = 1;
+	string food = 2;
+	bytes image = 3;
+}
+
+message PostFoodImageReply {
+	string message = 1;
+}

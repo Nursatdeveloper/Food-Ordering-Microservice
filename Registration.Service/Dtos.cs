@@ -12,5 +12,5 @@ namespace Registration.Service
     public record FoodCategoryViewDto(int RestaurantId, string CategoryName);
 
     public record CreateOrderStreamingConnection(string Company, string RestaurantName, string City, string Address, string ConnectionPassword);
-
+    public record CreateFoodImageDto(string Restaurant, string Food, IFormFile FoodImage);
 }
