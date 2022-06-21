@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Google.Protobuf;
 using Grpc.Core;
 using Image.Grpc.Service.Models;
 using Image.Grpc.Service.Repository;
@@ -31,6 +32,27 @@ namespace Image.Grpc.Service.Services
             }
             _logger.LogInformation("Post Food Image: Success");
             return new PostFoodImageReply { Message = "Success" };
+        }
+        public override async Task<GetFoodImageReply> GetFoodImage(GetFoodImageRequest request, ServerCallContext context)
+        {
+            context.CancellationToken.ThrowIfCancellationRequested();
+
+            var foodImage = await _foodImageRepository.GetAsync(img =>
+                img.Restaurant == request.Restaurant &&
+                img.Food == request.Food);
+            if (foodImage is null)
+            {
+                return new GetFoodImageReply { IsSuccess = false };
+            }
+
+            var foodImageBytes = foodImage.Image;
+
+
+            return new GetFoodImageReply 
+            { 
+                IsSuccess = true, 
+                Image = ByteString.CopyFrom(foodImageBytes) 
+            };
         }
     }
 }

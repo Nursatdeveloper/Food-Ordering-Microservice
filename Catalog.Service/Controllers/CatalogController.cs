@@ -1,6 +1,8 @@
 using Catalog.Service.Models;
 using Microsoft.AspNetCore.Mvc;
 using Catalog.Service.Repository;
+using Grpc.Net.Client;
+using Image.Grpc.Service;
 
 namespace Catalog.Service.Controllers
 {
@@ -98,8 +100,25 @@ namespace Catalog.Service.Controllers
             {
                 return NotFound($"Category '{foodCategory.CategoryName}' does not have any foods!");
             }
+            List<FoodWithImageDto> foodWithImageList = new List<FoodWithImageDto>();
 
-            var foodViewDto = new FoodsViewDto(restaurant.Name, foodCategory.CategoryName, foods.ToList());
+            foreach(var food in foods)
+            {
+                using var channel = GrpcChannel.ForAddress("https://localhost:5061");
+                var grpcClient = new Images.ImagesClient(channel);
+                var result = await grpcClient.GetFoodImageAsync(new GetFoodImageRequest
+                {
+                    Restaurant = restaurant.Name,
+                    Food = food.FoodName
+                });
+
+                var foodWithImageDto = new FoodWithImageDto(food.Id, food.FoodName, food.Ingredients,
+                    food.Price, food.PreparationTime, result.Image.ToArray());
+
+                foodWithImageList.Add(foodWithImageDto);
+            }
+
+            var foodViewDto = new FoodsViewDto(restaurant.Name, foodCategory.CategoryName, foodWithImageList);
             return Ok(foodViewDto);
         }
 

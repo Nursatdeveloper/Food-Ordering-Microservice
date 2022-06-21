@@ -9,7 +9,8 @@ namespace Catalog.Service
     public record PublishFoodDto(string RestaurantName, string CategoryName, string FoodName, string Ingredients, int Price, int PreparationTime);
     public record RestaurantWithAddressDto(string RestaurantName, string city, List<Address> Addresses);
     public record RestaurantWithFoodCategoryDto(string RestaurantName, List<FoodCategory> FoodCategories);
-    public record FoodsViewDto(string restaurantName, string categoryName, List<Food> foods);
+    public record FoodsViewDto(string restaurantName, string categoryName, List<FoodWithImageDto> foods);
+    public record FoodWithImageDto(int Id, string FoodName, string Ingredients, int Price, int PreparationTime, byte[] Image);
 
     public record CreateOrderDto(string CustomerName, string Telephone, string DeliveryAddress, int foodId);
 }

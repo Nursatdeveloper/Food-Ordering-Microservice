@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using System.Linq.Expressions;
 
 namespace Image.Grpc.Service.Repository
 {
@@ -19,6 +20,11 @@ namespace Image.Grpc.Service.Repository
             }
             await dbCollection.InsertOneAsync(entity);
             return entity;
+        }
+
+        public async Task<T> GetAsync(Expression<Func<T, bool>> condition)
+        {
+            return await dbCollection.Find(condition).FirstOrDefaultAsync();
         }
     }
 }
