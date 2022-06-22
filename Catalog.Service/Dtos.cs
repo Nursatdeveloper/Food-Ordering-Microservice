@@ -11,6 +11,7 @@ namespace Catalog.Service
     public record RestaurantWithFoodCategoryDto(string RestaurantName, List<FoodCategory> FoodCategories);
     public record FoodsViewDto(string restaurantName, string categoryName, List<FoodWithImageDto> foods);
     public record FoodWithImageDto(int Id, string FoodName, string Ingredients, int Price, int PreparationTime, byte[] Image);
+    public record RestaurantWithImageDto(int Id, string Restaurant, byte[] Image);
 
     public record CreateOrderDto(string CustomerName, string Telephone, string DeliveryAddress, int foodId);
 }

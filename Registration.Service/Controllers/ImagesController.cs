@@ -10,7 +10,6 @@ namespace Registration.Service.Controllers
     public class ImagesController : ControllerBase
     { 
 
-
         [HttpPost]
         [Route("food")]
         public async Task<ActionResult> PostFoodImage([FromForm] CreateFoodImageDto createFoodImageDto)
@@ -30,6 +29,22 @@ namespace Registration.Service.Controllers
             using var channel = GrpcChannel.ForAddress("https://localhost:5061");
             var grpcClient = new Images.ImagesClient(channel);
             var message = await grpcClient.PostFoodImageAsync(request);
+            return Ok(message);
+        }
+
+        [HttpPost]
+        [Route("restaurant")]
+        public async Task<ActionResult> PostRestaurantImage([FromForm] CreateRestaurantImageDto createRestaurantImageDto)
+        {
+            var request = new PostRestaurantImageRequest { Restaurant = createRestaurantImageDto.Restaurant };
+
+            using var stream = new MemoryStream();
+            await createRestaurantImageDto.RestaurantImage.CopyToAsync(stream);
+            request.Image = ByteString.CopyFrom(stream.ToArray());
+
+            using var channel = GrpcChannel.ForAddress("https://localhost:5061");
+            var grpcClient = new Images.ImagesClient(channel);
+            var message = await grpcClient.PostRestaurantImageAsync(request);
             return Ok(message);
         }
 

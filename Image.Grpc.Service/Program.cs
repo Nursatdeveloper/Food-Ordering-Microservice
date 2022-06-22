@@ -11,7 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddGrpc();
 
 builder.Services.AddMongoDb()
-                .AddMongoRepository<FoodImage>("foodImages");
+                .AddMongoRepository<FoodImage>("foodImages")
+                .AddMongoRepository<RestaurantImage>("restaurantImages")
+                .AddMongoRepository<FoodCategoryImage>("foodCategoryImages");
 
 builder.Services.AddAutoMapper(typeof(Program));
 

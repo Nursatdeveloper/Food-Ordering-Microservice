@@ -6,6 +6,8 @@ package images;
 
 service Images {
 	rpc PostFoodImage (PostFoodImageRequest) returns (PostFoodImageReply);
+	rpc PostRestaurantImage (PostRestaurantImageRequest) returns (PostRestaurantImageReply);
+
 }
 
 message PostFoodImageRequest {
@@ -15,5 +17,14 @@ message PostFoodImageRequest {
 }
 
 message PostFoodImageReply {
+	string message = 1;
+}
+
+message PostRestaurantImageRequest {
+	string restaurant = 1;
+	bytes image = 2;
+}
+
+message PostRestaurantImageReply {
 	string message = 1;
 }

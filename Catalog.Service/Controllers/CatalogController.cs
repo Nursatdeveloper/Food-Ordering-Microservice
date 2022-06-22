@@ -35,7 +35,29 @@ namespace Catalog.Service.Controllers
             {
                 return NotFound();
             }
-            return Ok(restaurants);
+
+            var restaurantWithImageList = new List<RestaurantWithImageDto>();
+            foreach (var restaurant in restaurants)
+            {
+                using var channel = GrpcChannel.ForAddress("https://localhost:5061");
+                var grpcClient = new Images.ImagesClient(channel);
+                var restaurantImageReply = await grpcClient.GetRestaurantImageAsync(new GetRestaurantImageRequest 
+                { 
+                    Restaurant = restaurant.Name 
+                });
+                if(restaurantImageReply is null)
+                {
+                    var restaurantWithImage = new RestaurantWithImageDto(restaurant.Id, restaurant.Name, null);
+                    restaurantWithImageList.Add(restaurantWithImage);
+                }
+                else
+                {
+                    var restaurantWithImage = new RestaurantWithImageDto(restaurant.Id, restaurant.Name,
+                    restaurantImageReply.Image.ToArray());
+                    restaurantWithImageList.Add(restaurantWithImage);
+                }          
+            }
+            return Ok(restaurantWithImageList);
         }
 
         [HttpGet]
