@@ -48,5 +48,25 @@ namespace Registration.Service.Controllers
             return Ok(message);
         }
 
+        [HttpPost]
+        [Route("food-category")]
+        public async Task<ActionResult> PostFoodCategoryImage([FromForm] CreateFoodCategoryImageDto createFoodCategoryImageDto)
+        {
+            var request = new PostFoodCategoryImageRequest
+            {
+                Restaurant = createFoodCategoryImageDto.Restaurant,
+                Category = createFoodCategoryImageDto.Category
+            };
+
+            using var stream = new MemoryStream();
+            await createFoodCategoryImageDto.CategoryImage.CopyToAsync(stream);
+            request.Image = ByteString.CopyFrom(stream.ToArray());
+
+            using var channel = GrpcChannel.ForAddress("https://localhost:5061");
+            var grpcClient = new Images.ImagesClient(channel);
+            var message = await grpcClient.PostFoodCategoryImageAsync(request);
+            return Ok(message);
+        }
+
     }
 }

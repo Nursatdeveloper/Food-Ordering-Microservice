@@ -9,6 +9,7 @@ namespace Image.Grpc.Service.Mapper
         {
             CreateMap<PostFoodImageRequest, FoodImage>();
             CreateMap<PostRestaurantImageRequest, RestaurantImage>();
+            CreateMap<PostFoodCategoryImageRequest, FoodCategoryImage>();
         }
     }
 }

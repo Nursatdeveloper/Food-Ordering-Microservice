@@ -10,6 +10,10 @@ service Images {
 
 	rpc PostRestaurantImage (PostRestaurantImageRequest) returns (PostRestaurantImageReply);
 	rpc GetRestaurantImage (GetRestaurantImageRequest) returns (GetRestaurantImageReply);
+
+	rpc PostFoodCategoryImage (PostFoodCategoryImageRequest) returns (PostFoodCategoryImageReply);
+	rpc GetFoodCategoryImage (GetFoodCategoryImageRequest) returns (GetFoodCategoryImageReply);
+
 }
 
 message PostFoodImageRequest {
@@ -46,5 +50,24 @@ message GetRestaurantImageRequest {
 }
 
 message GetRestaurantImageReply {
+	bytes image = 1;
+}
+
+message PostFoodCategoryImageRequest {
+	string restaurant = 1;
+	string category = 2;
+	bytes image = 3;
+}
+
+message PostFoodCategoryImageReply {
+	string message = 1;
+}
+
+message GetFoodCategoryImageRequest {
+	string restaurant = 1;
+	string category = 2;
+}
+
+message GetFoodCategoryImageReply {
 	bytes image = 1;
 }

@@ -96,9 +96,31 @@ namespace Catalog.Service.Controllers
                 return NotFound("Restaurant does not have any food categories!");
             }
 
-            var restaurantWithFoodCategories = new RestaurantWithFoodCategoryDto(restaurant.Name, foodCategories.ToList());
+            var foodCategoriesWithImageList = new List<FoodCategoriesWithImageDto>();
+            foreach(var category in foodCategories)
+            {
+                using var channel = GrpcChannel.ForAddress("https://localhost:5061");
+                var grpcClient = new Images.ImagesClient(channel);
+                var foodCategoryImageReply = await grpcClient.GetFoodCategoryImageAsync(new GetFoodCategoryImageRequest
+                {
+                    Restaurant = restaurant.Name,
+                    Category = category.CategoryName
+                });
+                if(foodCategoryImageReply is null)
+                {
+                    var foodCategoryWithImage = new FoodCategoriesWithImageDto(
+                        category.Id, category.CategoryName, null);
+                    foodCategoriesWithImageList.Add(foodCategoryWithImage);
+                }
+                else
+                {
+                    var foodCategoryWithImage = new FoodCategoriesWithImageDto(
+                        category.Id, category.CategoryName, foodCategoryImageReply.Image.ToArray());
+                    foodCategoriesWithImageList.Add(foodCategoryWithImage);
+                }
+            }
+            var restaurantWithFoodCategories = new RestaurantWithFoodCategoryDto(restaurant.Name, foodCategoriesWithImageList);
             return Ok(restaurantWithFoodCategories);
-
         }
 
         [HttpGet]

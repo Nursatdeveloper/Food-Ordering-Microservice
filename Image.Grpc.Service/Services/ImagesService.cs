@@ -12,16 +12,19 @@ namespace Image.Grpc.Service.Services
         private readonly IMapper _mapper;
         private readonly IRepository<FoodImage> _foodImageRepository;
         private readonly IRepository<RestaurantImage> _restaurantImageRepository;
+        private readonly IRepository<FoodCategoryImage> _foodCategoryImageRepository;
 
         public ImagesService(ILogger<ImagesService> logger, 
             IMapper mapper, 
             IRepository<FoodImage> foodImageRepository,
-            IRepository<RestaurantImage> restaurantImageRepository)
+            IRepository<RestaurantImage> restaurantImageRepository,
+            IRepository<FoodCategoryImage> foodCategoryImageRepository)
         {
             _logger = logger;
             _mapper = mapper;
             _foodImageRepository = foodImageRepository;
             _restaurantImageRepository = restaurantImageRepository;
+            _foodCategoryImageRepository = foodCategoryImageRepository;
         }
 
         public override async Task<PostFoodImageReply> PostFoodImage(PostFoodImageRequest request, 
@@ -88,6 +91,36 @@ namespace Image.Grpc.Service.Services
                 return new GetRestaurantImageReply { };
             }
             return new GetRestaurantImageReply { Image = ByteString.CopyFrom(restaurantImage.Image) };
+        }
+
+        public override async Task<PostFoodCategoryImageReply> PostFoodCategoryImage(PostFoodCategoryImageRequest request,
+            ServerCallContext context)
+        {
+            context.CancellationToken.ThrowIfCancellationRequested();
+
+            var foodCategoryImage = _mapper.Map<FoodCategoryImage>(request);
+            var createdImage = await _foodCategoryImageRepository.CreateAsync(foodCategoryImage);
+            if(createdImage.Id is null)
+            {
+                _logger.LogError("--> Post Food Category Image: Failure");
+                return new PostFoodCategoryImageReply { Message = "Failure" };
+            }
+            _logger.LogInformation("--> Post Food Category Image: Success");
+            return new PostFoodCategoryImageReply { Message = "Success" };
+        }
+
+        public override async Task<GetFoodCategoryImageReply> GetFoodCategoryImage(GetFoodCategoryImageRequest request,
+            ServerCallContext context)
+        {
+            context.CancellationToken.ThrowIfCancellationRequested();
+
+            var foodCategoryImage = await _foodCategoryImageRepository.GetAsync(img => 
+                img.Restaurant == request.Restaurant && img.Category == request.Category);
+            if(foodCategoryImage is null)
+            {
+                return new GetFoodCategoryImageReply { };
+            }
+            return new GetFoodCategoryImageReply { Image = ByteString.CopyFrom(foodCategoryImage.Image) };
         }
     }
 }
