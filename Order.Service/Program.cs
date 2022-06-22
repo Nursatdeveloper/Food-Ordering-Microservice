@@ -52,7 +52,6 @@ app.UseRouting();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapHub<OrderHub>("/ws/orders");
-    endpoints.MapHub<DeliveryHub>("/ws/deliveries");
 });
 
 app.Run();

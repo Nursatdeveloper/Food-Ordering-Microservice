@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using Order.Service.Hubs;
 using Order.Service.Models;
 using Order.Service.Repository;
 using static Order.Service.Dtos;
@@ -11,35 +13,27 @@ namespace Order.Service.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IRepository<FoodOrder> _orderRepository;
+        private readonly IHubContext<OrderHub> _hubContext;
 
-        public OrderController(IRepository<FoodOrder> orderRepository)
+        public OrderController(IRepository<FoodOrder> orderRepository,
+            IHubContext<OrderHub> hubContext)
         {
             _orderRepository = orderRepository;
+            _hubContext = hubContext;
         }
 
-        [HttpGet]
-        [Route("for-restaurants")]
-        public async Task<ActionResult> GetForRestaurants()
+        [HttpPost]
+        [Route("accept-for-delivery")]
+        public async Task<ActionResult> AcceptForDelivery(int id)
         {
-            var ordersForRestaurants = await _orderRepository.GetAllAsync(o => o.Status == "Pending" || o.Status == "Executing");
-            if(ordersForRestaurants.Count() == 0)
-            {
-                return BadRequest("List of orders for restaurants is empty!");
-            }
-            return Ok(ordersForRestaurants);
-        }
-        
-        [HttpGet]
-        [Route("for-deliveries")]
-        public async Task<ActionResult> GetForDeliveries()
-        {
-            var ordersForDeliveries = await _orderRepository.GetAllAsync(o => o.Status == "Ready to deliver" || o.Status == "Executing");
+            var order = await _orderRepository.GetByIdAsync(id);
 
-            if(ordersForDeliveries.Count() == 0)
-            {
-                return BadRequest("List of orders for delivery is empty!");
-            }
-            return Ok(ordersForDeliveries);
+            order.DeliveryCode = GenerateDeliveryCode();
+            await _orderRepository.UpdateAsync(order);
+
+            string room = $"{order.RestaurantName} {order.RestaurantAddress}";
+            await _hubContext.Clients.Group(room).SendAsync("AcceptedByDelivery", order);
+            return Ok(order);
         }
 
         [HttpPost]
@@ -55,6 +49,19 @@ namespace Order.Service.Controllers
             order.Status = changeOrderStatusDto.OrderStatus;
             await _orderRepository.UpdateAsync(order);
             return Ok(order);
+        }
+
+        private string GenerateDeliveryCode()
+        {
+            string deliveryCode = "";
+            char[] chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
+            Random random = new Random();
+            for(int i = 0; i < 6; i++)
+            {
+                int index = random.Next(0, chars.Length - 1);
+                deliveryCode += chars[index];
+            }
+            return deliveryCode;
         }
 
     }

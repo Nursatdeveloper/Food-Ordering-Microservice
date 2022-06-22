@@ -26,7 +26,6 @@ namespace Order.Service.EventProcessing
             var orderPublishedDto = JsonSerializer.Deserialize<OrderPublishedDto>(message);
             var order = _mapper.Map<FoodOrder>(orderPublishedDto);
             order.Status = "Pending";
-            order.IsAcceptedByDelivery = false;
 
             var scope = _scopeFactory.CreateScope();
             var orderRepository = scope.ServiceProvider.GetRequiredService<IRepository<FoodOrder>>();
