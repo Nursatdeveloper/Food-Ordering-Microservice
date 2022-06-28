@@ -2,22 +2,112 @@ version: '3.4'
 
 services:
   rabbitmq:
-    image: rabbitmq:management
+    image: rabbitmq:3-management
     container_name: rabbitmq
+    hostname: rabbitmq
     ports:
-      - "15672:15672"
       - "5672:5672"
+      - "15672:15672"
     volumes:
       - rabbitmqdata:/var/lib/rabbitmq
 
   mongodb:
     image: mongo:latest
-    container_name: image_grpc_service_db
+    container_name: mongodb
     ports: 
       - 27017:27017
     volumes:
       - mongodbdata:/data/db
 
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: "root"
+    ports:
+      - "5432:5432"
+    volumes:
+      - psqldata:/var/lib/postgres/data
+  
+  registration_service:
+    image: nursatzeinolla/registration-service:prod-v1.0
+    depends_on: 
+      - "postgres"
+      - "rabbitmq"
+    build:
+      context: .
+      dockerfile: Registration.Service/Dockerfile
+    environment:
+      DB_Host: "postgres"
+      DB_Port: "5432"
+      DB_Name: "Registration_Service_Production_DB"
+      DB_User: "postgres"
+      DB_Password: "root"
+      GrpcServiceAddress: "http://192.168.208.8/20:5060"
+      RabbitMQHost: "rabbitmq"
+      RabbitMQPort: "5672"
+    ports:
+      - "5000:80"
+      - "5001:443"
+
+  catalog_service:
+    image: nursatzeinolla/catalog-service:prod-v1.0
+    depends_on:
+      - "postgres"
+      - "rabbitmq"
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Catalog.Service/Dockerfile
+    environment:
+      DB_Host: "postgres"
+      DB_Port: "5432"
+      DB_Name: "Catalog_Service_Production_DB"
+      DB_User: "postgres"
+      DB_Password: "root"
+      GrpcServiceAddress: "http://192.168.208.8/20:5060"
+      RabbitMQHost: "rabbitmq"
+      RabbitMQPort: "5672"
+    ports:
+      - "5051:443"
+      - "5050:80"
+
+  identity_service:
+    image: nursatzeinolla/identity-service:prod-v1.0
+    depends_on:
+      - "postgres"
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Identity.Service/Dockerfile
+    environment:
+      DB_Host: "postgres"
+      DB_Port: "5432"
+      DB_Name: "Identity_Service_Production_DB"
+      DB_User: "postgres"
+      DB_Password: "root"
+    ports:
+      - "8000:80"
+      - "8001:443"
+
+  image_grpc_service:
+    image: nursatzeinolla/image-grpc-service:prod-v1.0
+    hostname: image_grpc_service
+    depends_on:
+      - "mongodb"
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Image.Grpc.Service/Dockerfile
+    environment:
+      MongoDbConnection: "mongodb://mongodb:27017"
+      Database: "Image_Grpc_Service_Production_DB"
+    ports:
+      - "5060:80"
+      - "5061:443"
+
+
 volumes:
   mongodbdata:
   rabbitmqdata:
+  psqldata:

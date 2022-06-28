@@ -26,12 +26,6 @@ namespace Identity.Service.Controllers
             _mapper = mapper;
             _jwtService = jwtService;
         }
-        [Authorize]
-        [HttpGet]
-        public async Task<JsonResult> Get()
-        {
-            return new JsonResult("HEllo world");
-        }
 
         [HttpPost]
         [Route("user/login")]

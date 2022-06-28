@@ -57,6 +57,32 @@ namespace Registration.Service.Controllers
             return Unauthorized();
 
         }
+        [HttpPost]
+        [Route("test")]
+        public async Task<ActionResult<Restaurant>> TestPost(CreateRestaurantDto createRestaurantDto)
+        {
+            var restaurantExists = await _restaurantRepository.Contains(r => r.Name == createRestaurantDto.Name);
+            if (restaurantExists)
+            {
+                return BadRequest($"Restaurant: {createRestaurantDto.Name} already exists!");
+            }
+            var restaurant = _mapper.Map<Restaurant>(createRestaurantDto);
+
+            var createdModel = await _restaurantRepository.CreateAsync(restaurant);
+
+            if (createdModel is null)
+            {
+                return StatusCode(500, "Could not create restaurant!");
+            }
+            var publishRestaurant = new PublishRestaurant()
+            {
+                Name = createdModel.Name,
+                Event = "Restaurant_Published"
+            };
+            _messageBusClient.PublishRestaurant(publishRestaurant);
+
+            return CreatedAtAction(nameof(Get), new { id = createdModel.Id }, createdModel);
+        }
 
         [HttpPost]
         public async Task<ActionResult> Post(CreateRestaurantDto createRestaurantDto)

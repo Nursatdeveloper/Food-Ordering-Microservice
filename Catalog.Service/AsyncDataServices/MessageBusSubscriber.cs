@@ -9,15 +9,18 @@ namespace Catalog.Service.AsyncDataServices
     {
         private readonly IConfiguration _configuration;
         private readonly IEventProcessor _eventProcessor;
+        private readonly IWebHostEnvironment _env;
         private IConnection _connection;
         private IModel _channel;
         private string _queueName;
 
-        public MessageBusSubscriber(IConfiguration configuration, IEventProcessor eventProcessor)
+        public MessageBusSubscriber(IConfiguration configuration, 
+            IEventProcessor eventProcessor, 
+            IWebHostEnvironment env)
         {
             _configuration = configuration;
             _eventProcessor = eventProcessor;
-
+            _env = env;
             Start_RabbitMQ();
         }
 
@@ -44,9 +47,14 @@ namespace Catalog.Service.AsyncDataServices
         {
             var factory = new ConnectionFactory()
             {
-                HostName = _configuration["RabbitMQHost"],
-                Port = int.Parse(_configuration["RabbitMQPort"])
+                HostName = _env.IsDevelopment() ?
+                    _configuration["RabbitMQHost"] :
+                    Environment.GetEnvironmentVariable("RabbitMQHost"),
+                Port = _env.IsDevelopment() ?
+                    int.Parse(_configuration["RabbitMQPort"]) :
+                    int.Parse(Environment.GetEnvironmentVariable("RabbitMQPort")!)
             };
+            Console.WriteLine($"--> C.S RabbitMQ: {factory.HostName} {factory.Port}");
 
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();

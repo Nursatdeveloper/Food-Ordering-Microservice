@@ -14,11 +14,28 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var key = builder.Configuration["SecretKey"];
-var connectionString = builder.Configuration.GetConnectionString("DevPsqlConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
+if (builder.Environment.IsDevelopment())
+{
+    Console.WriteLine("--> Current Environment: Development");
+    var connectionString = builder.Configuration.GetConnectionString("DevPsqlConnection");
+    builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
+}
+else if (builder.Environment.IsProduction())
+{
+    Console.WriteLine("--> Current Environment: Production");
+    var host = Environment.GetEnvironmentVariable("DB_Host");
+    var port = Environment.GetEnvironmentVariable("DB_Port");
+    var database = Environment.GetEnvironmentVariable("DB_Name");
+    var user = Environment.GetEnvironmentVariable("DB_User");
+    var password = Environment.GetEnvironmentVariable("DB_Password");
+    var connectionString = $"Host={host};Port={port};Database={database};User Id={user};Password={password}";
+    builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
+}
 
 builder.Services.AddAutoMapper(typeof(Program));
+
+var key = builder.Configuration["SecretKey"];
+Console.WriteLine($"--> key={key}");
 
 builder.Services.AddAuthentication(x =>
 {
@@ -48,8 +65,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();

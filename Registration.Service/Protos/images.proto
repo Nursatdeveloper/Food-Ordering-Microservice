@@ -38,3 +38,4 @@ message PostFoodCategoryImageRequest {
 message PostFoodCategoryImageReply {
 	string message = 1;
 }
+

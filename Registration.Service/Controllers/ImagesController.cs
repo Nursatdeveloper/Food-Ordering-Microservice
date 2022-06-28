@@ -8,7 +8,15 @@ namespace Registration.Service.Controllers
     [Route("api/v1/[controller]")]
     [ApiController]
     public class ImagesController : ControllerBase
-    { 
+    {
+        private string grpcServiceProductionAddress =  Environment.GetEnvironmentVariable("GrpcServiceAddress")!;
+        private string grpcServiceDevelopmentAddress = "https://localhost:5061";
+        private readonly IWebHostEnvironment _env;
+
+        public ImagesController(IWebHostEnvironment env)
+        {
+            _env = env;
+        }
 
         [HttpPost]
         [Route("food")]
@@ -25,8 +33,16 @@ namespace Registration.Service.Controllers
                 await createFoodImageDto.FoodImage.CopyToAsync(stream);
                 request.Image = ByteString.CopyFrom(stream.ToArray());
             }
+            string address;
+            if(_env.IsDevelopment()) { address = grpcServiceDevelopmentAddress; }
+            else { address = grpcServiceProductionAddress; }
 
-            using var channel = GrpcChannel.ForAddress("https://localhost:5061");
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2Support", true);
+
+            var httpHandler = new HttpClientHandler();
+            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            using var channel = GrpcChannel.ForAddress(address, new GrpcChannelOptions { HttpHandler = httpHandler });
             var grpcClient = new Images.ImagesClient(channel);
             var message = await grpcClient.PostFoodImageAsync(request);
             return Ok(message);
@@ -42,7 +58,16 @@ namespace Registration.Service.Controllers
             await createRestaurantImageDto.RestaurantImage.CopyToAsync(stream);
             request.Image = ByteString.CopyFrom(stream.ToArray());
 
-            using var channel = GrpcChannel.ForAddress("https://localhost:5061");
+            string address;
+            if (_env.IsDevelopment()) { address = grpcServiceDevelopmentAddress; }
+            else { address = grpcServiceProductionAddress; }
+
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2Support", true);
+
+            var httpHandler = new HttpClientHandler();
+            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            using var channel = GrpcChannel.ForAddress(address, new GrpcChannelOptions { HttpHandler = httpHandler });
             var grpcClient = new Images.ImagesClient(channel);
             var message = await grpcClient.PostRestaurantImageAsync(request);
             return Ok(message);
@@ -62,7 +87,16 @@ namespace Registration.Service.Controllers
             await createFoodCategoryImageDto.CategoryImage.CopyToAsync(stream);
             request.Image = ByteString.CopyFrom(stream.ToArray());
 
-            using var channel = GrpcChannel.ForAddress("https://localhost:5061");
+            string address;
+            if (_env.IsDevelopment()) { address = grpcServiceDevelopmentAddress; }
+            else { address = grpcServiceProductionAddress; }
+
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2Support", true);
+
+            var httpHandler = new HttpClientHandler();
+            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            using var channel = GrpcChannel.ForAddress(address, new GrpcChannelOptions { HttpHandler = httpHandler });
             var grpcClient = new Images.ImagesClient(channel);
             var message = await grpcClient.PostFoodCategoryImageAsync(request);
             return Ok(message);

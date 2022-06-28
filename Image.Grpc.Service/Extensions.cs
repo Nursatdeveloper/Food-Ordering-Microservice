@@ -8,15 +8,25 @@ namespace Image.Grpc.Service
 {
     public static class Extensions
     {
-        public static IServiceCollection AddMongoDb(this IServiceCollection services)
+        public static IServiceCollection AddMongoDb(this IServiceCollection services, bool isDevelopmentEnv)
         {
             BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
 
             services.AddSingleton(serviceProvider =>
             {
-                var configuration = serviceProvider.GetService<IConfiguration>();
-                var connectionString = configuration.GetConnectionString("DevMongoConnection");
-                var databaseName = configuration.GetSection("Database").Value;
+                string connectionString;
+                string databaseName;
+                if (isDevelopmentEnv)
+                {
+                    var configuration = serviceProvider.GetService<IConfiguration>();
+                    connectionString = configuration.GetConnectionString("DevMongoConnection");
+                    databaseName = configuration.GetSection("Database").Value;
+                }
+                else
+                {
+                    connectionString = Environment.GetEnvironmentVariable("MongoDbConnection");
+                    databaseName = Environment.GetEnvironmentVariable("Database");
+                }
                 var mongoClient = new MongoClient(connectionString);
                 return mongoClient.GetDatabase(databaseName);
             });

@@ -4,6 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>437630ed-254d-40be-8b9d-9f940eeeb89c</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,14 +20,14 @@
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		  <PrivateAssets>all</PrivateAssets>
 	  </PackageReference>
+	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
 	  <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.2" />
 	  <PackageReference Include="RabbitMQ.Client" Version="6.3.0" />
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
-	  	  <PackageReference Include="Google.Protobuf" Version="3.21.1" />
+	  <Protobuf Include="Protos\images.proto" GrpcServices="Client" />
+	  <PackageReference Include="Google.Protobuf" Version="3.21.1" />
 	  <PackageReference Include="Grpc.Net.Client" Version="2.46.0" />
 	  <PackageReference Include="Grpc.Tools" Version="2.46.3" />
-	  <ProjectReference Include="..\Image.Grpc.Service\Image.Grpc.Service.csproj" />
-	  <Protobuf Include="Protos\images.proto" GrpcServices="Client" />	  
   </ItemGroup>
 
 </Project>

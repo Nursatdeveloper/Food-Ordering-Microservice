@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddGrpc();
 
-builder.Services.AddMongoDb()
+builder.Services.AddMongoDb(builder.Environment.IsDevelopment())
                 .AddMongoRepository<FoodImage>("foodImages")
                 .AddMongoRepository<RestaurantImage>("restaurantImages")
                 .AddMongoRepository<FoodCategoryImage>("foodCategoryImages");

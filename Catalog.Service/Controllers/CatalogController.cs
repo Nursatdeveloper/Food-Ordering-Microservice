@@ -14,16 +14,21 @@ namespace Catalog.Service.Controllers
         private readonly IRepository<Address> _addressRepository;
         private readonly IRepository<FoodCategory> _foodCategoryRepository;
         private readonly IRepository<Food> _foodRepository;
+        private readonly IWebHostEnvironment _env;
+        private string grpcServiceProductionAddress = Environment.GetEnvironmentVariable("GrpcServiceAddress");
+        private string grpcServiceDevelopmentAddress = "https://localhost:5061";
 
         public CatalogController(IRepository<Restaurant> restaurantRepository,
                 IRepository<Address> addressRepository,
                 IRepository<FoodCategory> foodCategoryRepository,
-                IRepository<Food> foodRepository)
+                IRepository<Food> foodRepository, 
+                IWebHostEnvironment env)
         {
             _restaurantRepository = restaurantRepository;
             _addressRepository = addressRepository;
             _foodCategoryRepository = foodCategoryRepository;
             _foodRepository = foodRepository;
+            _env = env;
         }
 
         [HttpGet]
@@ -37,9 +42,19 @@ namespace Catalog.Service.Controllers
             }
 
             var restaurantWithImageList = new List<RestaurantWithImageDto>();
+            string address;
             foreach (var restaurant in restaurants)
             {
-                using var channel = GrpcChannel.ForAddress("https://localhost:5061");
+                if(_env.IsDevelopment()) { address = grpcServiceDevelopmentAddress; }
+                else { address = grpcServiceProductionAddress; }
+                Console.WriteLine($"--> Address: {address}");
+
+                AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+                AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2Support", true);
+
+                var httpHandler = new HttpClientHandler();
+                httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+                using var channel = GrpcChannel.ForAddress(address, new GrpcChannelOptions { HttpHandler = httpHandler });
                 var grpcClient = new Images.ImagesClient(channel);
                 var restaurantImageReply = await grpcClient.GetRestaurantImageAsync(new GetRestaurantImageRequest 
                 { 
@@ -97,9 +112,18 @@ namespace Catalog.Service.Controllers
             }
 
             var foodCategoriesWithImageList = new List<FoodCategoriesWithImageDto>();
+            string address;
             foreach(var category in foodCategories)
             {
-                using var channel = GrpcChannel.ForAddress("https://localhost:5061");
+                if (_env.IsDevelopment()) { address = grpcServiceDevelopmentAddress; }
+                else { address = grpcServiceProductionAddress; }
+
+                AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+                AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2Support", true);
+
+                var httpHandler = new HttpClientHandler();
+                httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+                using var channel = GrpcChannel.ForAddress(address, new GrpcChannelOptions { HttpHandler = httpHandler });
                 var grpcClient = new Images.ImagesClient(channel);
                 var foodCategoryImageReply = await grpcClient.GetFoodCategoryImageAsync(new GetFoodCategoryImageRequest
                 {
@@ -145,10 +169,18 @@ namespace Catalog.Service.Controllers
                 return NotFound($"Category '{foodCategory.CategoryName}' does not have any foods!");
             }
             List<FoodWithImageDto> foodWithImageList = new List<FoodWithImageDto>();
-
+            string address;
             foreach(var food in foods)
             {
-                using var channel = GrpcChannel.ForAddress("https://localhost:5061");
+                if (_env.IsDevelopment()) { address = grpcServiceDevelopmentAddress; }
+                else { address = grpcServiceProductionAddress; }
+
+                AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+                AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2Support", true);
+
+                var httpHandler = new HttpClientHandler();
+                httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+                using var channel = GrpcChannel.ForAddress(address, new GrpcChannelOptions { HttpHandler = httpHandler });
                 var grpcClient = new Images.ImagesClient(channel);
                 var result = await grpcClient.GetFoodImageAsync(new GetFoodImageRequest
                 {

@@ -8,17 +8,22 @@ namespace Registration.Service.AsyncDataServices
     public class MessageBusClient : IMessageBusClient
     {
         private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _env;
         private readonly IConnection? _connection;
         private readonly IModel? _channel;
 
-        public MessageBusClient(IConfiguration configuration)
+        public MessageBusClient(IConfiguration configuration, IWebHostEnvironment env)
         {
             _configuration = configuration;
-
+            _env = env;
             var factory = new ConnectionFactory()
             {
-                HostName = _configuration["RabbitMQHost"],
-                Port = int.Parse(_configuration["RabbitMQPort"])
+                HostName = _env.IsDevelopment() ? 
+                    _configuration["RabbitMQHost"] : 
+                    Environment.GetEnvironmentVariable("RabbitMQHost"),
+                Port = _env.IsDevelopment() ? 
+                    int.Parse(_configuration["RabbitMQPort"]) : 
+                    int.Parse(Environment.GetEnvironmentVariable("RabbitMQPort")!)
             };
 
             try
