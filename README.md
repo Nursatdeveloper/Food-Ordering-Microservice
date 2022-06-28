@@ -1,6 +1,6 @@
 # Food Ordering Application which is build by Microservice Architecture
 
-Services:
+#Services:
 `Registration Service` is responsible for all data registrations (e.g. new Restaurants, new Foods, new Users etc.), sends data to RabbitMQ Message Bus. <br/>
 `Catalog Service` is responsible to show all foods, food categories, restaurants available in DB and accept orders. Orders will be sent to RabbitMQ Message Bus. Customer mobile and web clients will call this api endpoint. <br/>
 `Order Service` is responsible to handle new orders and send them to client applications of delivery and restaurants in real time with SignalR. <br/>
