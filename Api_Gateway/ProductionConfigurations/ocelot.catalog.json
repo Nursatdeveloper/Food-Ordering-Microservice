@@ -1,0 +1,103 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/v1/catalog/restaurants",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalog_service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/gw/c/restaurants",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Customer"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/catalog/restaurants/{rId}/addresses?city={city}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalog_service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/gw/c/restaurants/{rId}/addresses?city={city}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Customer"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/catalog/restaurants/{rId}/food-categories",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalog_service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/gw/c/restaurant/{rId}/food-categories",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Customer"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/catalog/restaurants/{rId}/food-categories/{cId}/foods",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalog_service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/gw/c/restaurant/{rId}/category/{cId}/foods",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Customer"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/order",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalog_service",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/gw/c/order",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Customer"
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:10010"
+  }
+}
+

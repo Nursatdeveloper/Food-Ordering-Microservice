@@ -2,11 +2,11 @@
   "Routes": [
     {
       "DownstreamPathTemplate": "/api/v1/restaurants?company={company}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "registration_service",
-          "Port": 5001
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/gw/r/restaurants?company={company}",
@@ -21,11 +21,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/restaurants",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "registration_service",
-          "Port": 5001
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/gw/r/restaurants",
@@ -40,11 +40,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/restaurants/{rId}/addresses",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "registration_service",
-          "Port": 5001
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/gw/r/restaurant/{rId}/addresses",
@@ -59,11 +59,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/restaurants/{rId}/addresses/{aId}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "registration_service",
-          "Port": 5001
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/gw/r/restaurant/{rId}/address/{aId}",
@@ -78,11 +78,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/restaurants/address",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "registration_service",
-          "Port": 5001
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/gw/r/restaurant/address",
@@ -97,11 +97,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/foods/category",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "registration_service",
-          "Port": 5001
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/gw/r/foods/category",
@@ -116,11 +116,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/foods",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "registration_service",
-          "Port": 5001
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/gw/r/foods",
@@ -135,11 +135,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/images/food",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "registration_service",
-          "Port": 5001
+          "Host": "localhost",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/gw/r/images/food",
@@ -154,11 +154,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/images/restaurant",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "registration_service",
-          "Port": 5001
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/gw/r/images/restaurant",
@@ -173,11 +173,11 @@
     },
     {
       "DownstreamPathTemplate": "/api/v1/images/food-category",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "registration_service",
-          "Port": 5001
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/gw/r/images/food-category",
@@ -192,6 +192,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:10011"
+    "BaseUrl": "http://localhost:10010"
   }
 }

@@ -28,9 +28,19 @@ builder.Services.AddAuthentication(options =>
 
 builder.WebHost.ConfigureAppConfiguration((hostingContext, config) =>
 {
-    config.SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
-        .AddOcelot($"{hostingContext.HostingEnvironment.ContentRootPath}/DevelopmentConfigurations", hostingContext.HostingEnvironment)
-        .AddEnvironmentVariables();
+    if(hostingContext.HostingEnvironment.IsDevelopment())
+    {
+        config.SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
+            .AddOcelot($"{hostingContext.HostingEnvironment.ContentRootPath}/DevelopmentConfigurations", hostingContext.HostingEnvironment)
+            .AddEnvironmentVariables();
+    }
+    else
+    {
+        config.SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
+            .AddOcelot($"{hostingContext.HostingEnvironment.ContentRootPath}/ProductionConfigurations", hostingContext.HostingEnvironment)
+            .AddEnvironmentVariables();
+    }
+
 });
 
 builder.Services.AddOcelot();
