@@ -9,14 +9,16 @@ namespace Order.Service.AsyncDataServices
     {
         private readonly IConfiguration _configuration;
         private readonly IEventProcessor _eventProcessor;
+        private readonly IWebHostEnvironment _env;
         private IConnection _connection;
         private IModel _channel;
         private string _queueName;
 
-        public MessageBusSubscriber(IConfiguration configuration, IEventProcessor eventProcessor)
+        public MessageBusSubscriber(IConfiguration configuration, IEventProcessor eventProcessor, IWebHostEnvironment env)
         {
             _configuration = configuration;
             _eventProcessor = eventProcessor;
+            _env = env;
 
             Start_RabbitMQ();
         }
@@ -25,9 +27,14 @@ namespace Order.Service.AsyncDataServices
         {
             var factory = new ConnectionFactory()
             {
-                HostName = _configuration["RabbitMQHost"],
-                Port = int.Parse(_configuration["RabbitMQPort"])
+                HostName = _env.IsDevelopment() ?
+                    _configuration["RabbitMQHost"] :
+                    Environment.GetEnvironmentVariable("RabbitMQHost"),
+                Port = _env.IsDevelopment() ?
+                    int.Parse(_configuration["RabbitMQPort"]) :
+                    int.Parse(Environment.GetEnvironmentVariable("RabbitMQPort")!)
             };
+            Console.WriteLine($"--> C.S RabbitMQ: {factory.HostName} {factory.Port}");
 
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
@@ -59,7 +66,7 @@ namespace Order.Service.AsyncDataServices
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += (ModuleHandle, ea) =>
             {
-                Console.WriteLine("Event Received!");
+                Console.WriteLine("Order Service: Event Received!");
                 var body = ea.Body;
                 var message = Encoding.UTF8.GetString(body.ToArray());
 

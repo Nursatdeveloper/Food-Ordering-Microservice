@@ -55,9 +55,8 @@ services:
     image: nursatzeinolla/catalog-service:prod-v1.0
     container_name: catalog_service
     depends_on:
-      - "postgres"
-      - "rabbitmq"
-    restart: on-failure
+      - rabbitmq
+    restart: always
     build:
       context: .
       dockerfile: Catalog.Service/Dockerfile
@@ -72,6 +71,26 @@ services:
       RabbitMQPort: "5672"
     ports:
       - "5050:80"
+
+  order_service:
+    image: nursatzeinolla/order-service:prod-v1.0
+    hostname: order_service
+    depends_on:
+      - rabbitmq
+    restart: always
+    build:
+      context: .
+      dockerfile: Order.Service/Dockerfile
+    environment:
+      DB_Host: "postgres"
+      DB_Port: "5432"
+      DB_Name: "Order_Service_Production_DB"
+      DB_User: "postgres"
+      DB_Password: "root"
+      RabbitMQHost: "rabbitmq"
+      RabbitMQPort: "5672"
+    ports:
+      - "6000:80"
 
   identity_service:
     image: nursatzeinolla/identity-service:prod-v1.0
