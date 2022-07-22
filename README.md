@@ -1,4 +1,4 @@
-# Food Ordering Application which is build by Microservice Architecture
+# Food Ordering Application with Microservice Architecture
 
 # Services:
 `Registration Service` is responsible for all data registrations (e.g. new Restaurants, new Foods, new Users etc.), sends data to RabbitMQ Message Bus. <br/>
