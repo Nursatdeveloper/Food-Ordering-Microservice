@@ -15,4 +15,6 @@ namespace Catalog.Service
     public record FoodCategoriesWithImageDto(int Id, string Category, byte[] Image);
 
     public record CreateOrderDto(string CustomerName, string Telephone, string DeliveryAddress, int foodId);
+
+    public record TestDto(List<Restaurant> restaurants);
 }

@@ -32,6 +32,15 @@ namespace Catalog.Service.Controllers
         }
 
         [HttpGet]
+        [Route("test")]
+        public async Task<ActionResult> GetAllFoods()
+        {
+            var restaurants = await _restaurantRepository.GetAllAsync();
+            TestDto dto = new TestDto(restaurants.ToList());
+            return Ok(dto);
+        }
+
+        [HttpGet]
         [Route("restaurants")]
         public async Task<ActionResult> Get()
         {

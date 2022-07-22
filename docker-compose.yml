@@ -20,6 +20,7 @@ services:
       - mongodbdata:/data/db
 
   postgres:
+    container_name: postgres
     image: postgres:latest
     restart: always
     environment:
@@ -44,7 +45,7 @@ services:
       DB_Name: "Registration_Service_Production_DB"
       DB_User: "postgres"
       DB_Password: "root"
-      GrpcServiceAddress: "http://192.168.208.8/20:5060"
+      GrpcServiceAddress: "http://image_grpc_service:80"
       RabbitMQHost: "rabbitmq"
       RabbitMQPort: "5672"
     ports:
@@ -66,7 +67,7 @@ services:
       DB_Name: "Catalog_Service_Production_DB"
       DB_User: "postgres"
       DB_Password: "root"
-      GrpcServiceAddress: "http://192.168.208.8/20:5060"
+      GrpcServiceAddress: "http://image_grpc_service:80"
       RabbitMQHost: "rabbitmq"
       RabbitMQPort: "5672"
     ports:
@@ -75,6 +76,7 @@ services:
   order_service:
     image: nursatzeinolla/order-service:prod-v1.0
     hostname: order_service
+    container_name: order_service
     depends_on:
       - rabbitmq
     restart: always
@@ -94,6 +96,7 @@ services:
 
   identity_service:
     image: nursatzeinolla/identity-service:prod-v1.0
+    container_name: identity_service
     depends_on:
       - "postgres"
     restart: on-failure
@@ -112,7 +115,7 @@ services:
 
   image_grpc_service:
     image: nursatzeinolla/image-grpc-service:prod-v1.0
-    hostname: image_grpc_service
+    container_name: image_grpc_service
     depends_on:
       - "mongodb"
     restart: on-failure
@@ -129,6 +132,7 @@ services:
   api_gateway:
     image: nursatzeinolla/ocelot-api-gw:prod-v1.0
     hostname: api_gateway
+    container_name: api_gateway
     depends_on:
       - "registration_service"
       - "catalog_service"
@@ -138,6 +142,21 @@ services:
       dockerfile: Api_Gateway/Dockerfile
     ports:
       - "10010:80"
+
+  review_service:
+    image: nursatzeinolla/review-service:prod-v1.0
+    container_name: review_service
+    depends_on:
+      - "mongodb"
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Review.Service/Dockerfile
+    environment:
+      MongoDbConnection: "mongodb://mongodb:27017"
+      Database: "Review_Service_Production_DB"
+    ports:
+      - "7050:80"
 
 
 volumes:
