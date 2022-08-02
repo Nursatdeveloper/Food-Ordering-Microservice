@@ -6,6 +6,7 @@ namespace Catalog.Service.EventProcessing
         RestaurantAddressPublished,
         FoodPublished,
         FoodCategoryPublished,
+        RestaurantDeleted,
         Undefined
     }
 }

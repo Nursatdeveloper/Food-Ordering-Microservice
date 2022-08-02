@@ -105,5 +105,11 @@ namespace Registration.Service.AsyncDataServices
             var message = JsonSerializer.Serialize(publishOrderStreamingConnection);
             SendMessage(message);
         }
+
+        public void Publish_DeleteRestaurant(Publish_DeleteRestaurant deleteRestaurant)
+        {
+            var message = JsonSerializer.Serialize(deleteRestaurant);
+            SendMessage(message);
+        }
     }
 }

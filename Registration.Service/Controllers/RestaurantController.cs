@@ -183,6 +183,14 @@ namespace Registration.Service.Controllers
             }
 
             await _restaurantRepository.DeleteAsync(restaurant);
+
+            Publish_DeleteRestaurant deleteRestaurant = new()
+            {
+                Name = restaurant?.Name,
+                Event = "Restaurant_Deleted"
+            };
+            _messageBusClient.Publish_DeleteRestaurant(deleteRestaurant);
+
             return Ok();
         }
 

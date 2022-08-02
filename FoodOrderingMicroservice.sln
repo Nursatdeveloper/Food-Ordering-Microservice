@@ -20,7 +20,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservice.Infrastructure
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reviews.Service", "Review.Service\Reviews.Service.csproj", "{57907957-539A-45FA-A963-D73C64E476B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reviews.Service", "Review.Service\Reviews.Service.csproj", "{57907957-539A-45FA-A963-D73C64E476B2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "architecture", "architecture", "{3700266E-8107-4AB6-81D4-233F2C384B9C}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Downloads\architecture-Page-4.jpg = ..\..\Downloads\architecture-Page-4.jpg
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +64,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3700266E-8107-4AB6-81D4-233F2C384B9C} = {2EEDEC8D-6B39-4274-8508-46B4DD0BB0B2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E5305CB5-13B8-4D23-A32A-AA8A0FDCAAFF}

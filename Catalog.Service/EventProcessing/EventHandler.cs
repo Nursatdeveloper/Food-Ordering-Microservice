@@ -101,5 +101,19 @@ namespace Catalog.Service.EventProcessing
 
             }
         }
+
+        public async Task RestaurantDeleted(string message)
+        {
+            using(var scope = _scopeFactory.CreateScope())
+            {
+                var _restaurantRepository = scope.ServiceProvider.GetRequiredService<IRepository<Restaurant>>();
+
+                var restaurant = JsonSerializer.Deserialize<PublishRestaurantDto>(message);
+
+                var restaurantToDelete = await _restaurantRepository.GetAsync(r => r.Name == restaurant.Name);
+                await _restaurantRepository.DeleteAsync(restaurantToDelete);
+                
+            }
+        }
     }
 }

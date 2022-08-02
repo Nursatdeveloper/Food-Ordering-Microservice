@@ -10,5 +10,6 @@ namespace Registration.Service.AsyncDataServices
         void PublishFood(PublishFood publishFood);
         void PublishOrderStreamingConnection(PublishOrderStreamingConnection publishOrderStreamingConnection);
 
+        void Publish_DeleteRestaurant(Publish_DeleteRestaurant deleteRestaurant);
     }
 }

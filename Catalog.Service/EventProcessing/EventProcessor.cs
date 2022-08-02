@@ -33,6 +33,9 @@ namespace Catalog.Service.EventProcessing
                 case EventType.FoodPublished:
                     await handler.FoodPublished(message);
                     break;
+                case EventType.RestaurantDeleted:
+                    await handler.RestaurantDeleted(message);
+                    break;
                 default:
                     break;
             }
@@ -52,6 +55,8 @@ namespace Catalog.Service.EventProcessing
                     return EventType.FoodPublished;
                 case "Food_Category_Published":
                     return EventType.FoodCategoryPublished;
+                case "Restaurant_Deleted":
+                    return EventType.RestaurantDeleted;
                 default:
                     return EventType.Undefined;
             }
