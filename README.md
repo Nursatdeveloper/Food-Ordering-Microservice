@@ -13,3 +13,6 @@
 ## DB: Postgres, MongoDB
 ## Data Exchange: RabbitMQ, SignalR (for real-time communication)
 
+#Overall Architecture
+![alt text](https://github.com/Nursatdeveloper/food-ordering-microservice/blob/master/architecture-Page-4.jpg?raw=true)
+
